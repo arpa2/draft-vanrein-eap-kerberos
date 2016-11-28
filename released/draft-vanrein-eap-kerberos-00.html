@@ -1,0 +1,665 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Kerberos in the Extensible Authentication Protocol (EAP-Kerberos)</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Inner and Outer Identities"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Transporting Kerberos Frames over EAP"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 EAP-Kerberos as a Flow of Kerberos Frames"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Format of a Kerberos Frame"/>
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Encapsulation of Kerberos Frames in EAP"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Component Support for EAP-Kerberos"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Peer Support for EAP-Kerberos"/>
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Authenticator Support for EAP-Kerberos"/>
+<link href="#rfc.section.4.3" rel="Chapter" title="4.3 Backend Support for EAP-Kerberos"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Established Master Key"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Efficiency Considerations"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 Privacy Considerations"/>
+<link href="#rfc.section.8" rel="Chapter" title="8 Security Considerations"/>
+<link href="#rfc.section.9" rel="Chapter" title="9 IANA Considerations"/>
+<link href="#rfc.references" rel="Chapter" title="10 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="10.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="10.2 Informative References"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.5.1 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Van Rein, R." />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-vanrein-eap-kerberos-00" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-3-13" />
+  <meta name="dct.abstract" content="This specification permits Kerberos authentication as part of the EAP.  To support identity bootstrapping during network logon, the preceding acquisition of tickets may also be passed through this EAP mechanism." />
+  <meta name="description" content="This specification permits Kerberos authentication as part of the EAP.  To support identity bootstrapping during network logon, the preceding acquisition of tickets may also be passed through this EAP mechanism." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">Network Working Group</td>
+  <td class="right">R. Van Rein</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">ARPA2.net</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Standards Track</td>
+  <td class="right">March 13, 2016</td>
+</tr>
+<tr>
+  <td class="left">Expires: September 14, 2016</td>
+  <td class="right"></td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Kerberos in the Extensible Authentication Protocol (EAP-Kerberos)<br />
+  <span class="filename">draft-vanrein-eap-kerberos-00</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>This specification permits Kerberos authentication as part of the EAP.  To support identity bootstrapping during network logon, the preceding acquisition of tickets may also be passed through this EAP mechanism.</p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on September 14, 2016.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2016 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<li>2.   <a href="#rfc.section.2">Inner and Outer Identities</a></li>
+<li>3.   <a href="#rfc.section.3">Transporting Kerberos Frames over EAP</a></li>
+<ul><li>3.1.   <a href="#rfc.section.3.1">EAP-Kerberos as a Flow of Kerberos Frames</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Format of a Kerberos Frame</a></li>
+<li>3.3.   <a href="#rfc.section.3.3">Encapsulation of Kerberos Frames in EAP</a></li>
+</ul><li>4.   <a href="#rfc.section.4">Component Support for EAP-Kerberos</a></li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Peer Support for EAP-Kerberos</a></li>
+<li>4.2.   <a href="#rfc.section.4.2">Authenticator Support for EAP-Kerberos</a></li>
+<li>4.3.   <a href="#rfc.section.4.3">Backend Support for EAP-Kerberos</a></li>
+</ul><li>5.   <a href="#rfc.section.5">Established Master Key</a></li>
+<li>6.   <a href="#rfc.section.6">Efficiency Considerations</a></li>
+<li>7.   <a href="#rfc.section.7">Privacy Considerations</a></li>
+<li>8.   <a href="#rfc.section.8">Security Considerations</a></li>
+<li>9.   <a href="#rfc.section.9">IANA Considerations</a></li>
+<li>10.   <a href="#rfc.references">References</a></li>
+<ul><li>10.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>10.2.   <a href="#rfc.references.2">Informative References</a></li>
+</ul><li><a href="#rfc.authors">Author's Address</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#intro" id="intro">Introduction</a></h1>
+<p id="rfc.section.1.p.1">EAP, or the Extensible Authentication Protocol, is a pluggable mechanism for the control of network or service access by users.  It is usually communicated with users during a login phase of PPP or 802.1x, and passed on to backend servers in a RADIUS attribute [Section 5.1 of <a href="#RFC2865">[RFC2865]</a>] or Diameter AVP [Section 8.14 of <a href="#RFC6733">[RFC6733]</a>] set aside for EAP.</p>
+<p id="rfc.section.1.p.2">Although often used with password-based policies, EAP is equally suited for more advanced cryptographic approaches.  What this specification adds, is a facility for Kerberos authentication, without resorting to the use of a KDC as a mere password oracle for PAP.  To make this possible, the Application Protocol (AP) exchange of Kerberos is facilitated over EAP.</p>
+<p id="rfc.section.1.p.3">Since EAP is so often used to bootstrap online access, as is the case with PPP and 802.1x use cases, additional care is needed for procuring Kerberos tickets to use in the AP exchange.  To facilitate this, the EAP profile presented herein can also be used to pass Authentication Service (AS) and Ticket Granting Service (TGS) exchanges with a Kerberos-supportive backend.</p>
+<p id="rfc.section.1.p.4">For users, the applications of EAP are integrated with a Single Sign-On (SSO) facility, making their online experience more seemless because no separate password entry is required, nor is it required to resort to fixed secrets installed on their systems.</p>
+<p id="rfc.section.1.p.5">The following Security Claims [Section 7.2 of <a href="#RFC3748">[RFC3748]</a>] are made for EAP-Kerberos:</p>
+<pre>
+Auth. mechanism:           Kerberos
+Ciphersuite negotiation:   Yes
+Mutual authentication:     Yes
+Integrity protection:      No (not for EAP header fields)
+Replay protection:         Yes
+Confidentiality:           No, not always and not completely
+Key derivation:            Yes
+Key strength:              Usually 128 or 256 bit
+Dictionary attack prot.:   No
+Fast reconnect:            Yes
+Crypt. binding:            Yes, as implied by Kerberos
+Session independence:      Yes
+Fragmentation:             Yes
+Channel binding:           No
+</pre>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#inoutid" id="inoutid">Inner and Outer Identities</a></h1>
+<p id="rfc.section.2.p.1">It is common for EAP to be encapsulated in a context that communicates an identity, independently of what the EAP does with it.  This identity is sometimes referred to as the "outer" identity, to contrast it with an "inner" identity negotiated within the EAP transport.  As an example, when EAP is transported in RADIUS or Diameter, there is commonly a User-Name attribute at the same level as EAP; this would be the outer identity.</p>
+<p id="rfc.section.2.p.2">Not all methods distinguish between inner and outer identities and under such methods the outer identity often holds a user name to be authenticated.  This is not strictly required in an EAP context; the only thing needed is a decision from the backend to Accept or Reject a peer; any data exchanged works towards that end result.</p>
+<p id="rfc.section.2.p.3">Under EAP-Kerberos, the client PrincipalName and Realm may be considered the inner identity, and indeed is this the identity that is validated by the protocol flow.  It is vital to understand that the outer identity is in no way to be considered reliable as a user identity for the peer; this is because it falls outside the protected context of EAP-Kerberos.</p>
+<p id="rfc.section.2.p.4">The outer identity serves a different goal, namely as a locator for the backend authorisation server.  To the peer, this is a backend that is supportive of its access, and to the authenticator this is a basis for locating and/or constraining the backend server as an authoritative source of information about the peer and its rights of access to the EAP-protected resource.</p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#frames" id="frames">Transporting Kerberos Frames over EAP</a></h1>
+<p id="rfc.section.3.p.1">The EAP-Kerberos protocol carries an ordered flow of Kerberos frames, communicated in round trips.  This facilitates a Kerberos query/response sequence initiated by the peer, and leading to eventual Succes or Failure to authenticate the peer.  This section details what Kerberos frames are, and how an EAP message flow implements them.</p>
+<p id="rfc.section.3.p.2">Whenever a fatal error is detecting during the processing of EAP-Kerberos, this MUST lead to rejection of the authentication attempt, possibly after delivery of a final KRB-ERROR frame.  Any conflict with the specifications is considered a fatal error.</p>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#krb-flow" id="krb-flow">EAP-Kerberos as a Flow of Kerberos Frames</a></h1>
+<p id="rfc.section.3.1.p.1">EAP-Kerberos implements a flow of Kerberos frames.  Each Kerberos frame is a single data structure, recognised by an [APPLICATION n] tag.  The exchange between the authenticating peer and backend authentication server consists of a request/response interaction: The peer sens a request and the backend sends a response (which may be an error message).</p>
+<p id="rfc.section.3.1.p.2">The transmission channel of EAP-Kerberos is half-duplex, meaning that the peer and backend take turns sending messages.  Each sends one Kerberos frame and is then open for another.  In the case of the peer, receiving a Kerberos frame makes him free to send another, and in case of the backend, having receiving a Kerberos frame initiates its handling.</p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#krb-frame" id="krb-frame">Format of a Kerberos Frame</a></h1>
+<p id="rfc.section.3.2.p.1">A Kerberos frame is defined as a single DER-encoded data structure, so a single tag with length and a value that may hold more DER data.  The outermost tag and length are of explicit use to EAP-Kerberos.</p>
+<p id="rfc.section.3.2.p.2">The outermost tag MUST be an [APPLICATION n] tag.  The tag indicates what meaning the frame has in the context of the Kerberos application [usually according to <a href="#RFC4120">[RFC4120]</a>].  The tag may facilitate relaying decisions, especially in the backend authentication server.  Finally, the tag indicates a syntax that the entire Kerberos frame MUST adhere to.</p>
+<p id="rfc.section.3.2.p.3">The outermost length is used in the collection of a Kerberos frame that MAY have gotten fragmented over multiple EAP frames.  The first EAP frame to transport a Kerberos frame holds the outermost tag and length and a failure to contain both within this first message MAY be treated as a fatal error.</p>
+<p id="rfc.section.3.2.p.4">As a result of these definitions, Kerberos frames can be concatenated; the DER encoding clearly marks where one Kerberos frame ends and the next one starts.  This does not mean that such concatenation is permitted within an EAP frame; in fact, it is considered a fatal error if an EAP frame contains excess bytes after the end of a Kerberos frame.</p>
+<h1 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#eap-encaps" id="eap-encaps">Encapsulation of Kerberos Frames in EAP</a></h1>
+<p id="rfc.section.3.3.p.1">A Kerberos frame is cut into one or more non-empty fragments that lead to EAP frames that fit in the MTU for EAP frames.  The EAP-Kerberos protocol consists of such individually encapsulated fragments, as well as acknowledgement packages.</p>
+<p id="rfc.section.3.3.p.2">To enapsulate a Kerberos fragment, the standard EAP packet header [Section 4 of <a href="#RFC3748">[RFC3748]</a>] is prepended, consisting of the fragments's Code, Identifier and Length.  Note that it is possible to include a Kerberos fragment with a Success or Failure EAP frame that holds the Success or Failure code, not just for Request or Response codes.</p>
+<p id="rfc.section.3.3.p.3">The Length field holds five more than the non-zero number of bytes of the contained Kerberos fragment, and it should be noted that any further bytes count as padding in the data link layer, so these should not be taken into account when reconstructing a Kerberos frame from fragments in EAP frames.  EAP packets with Length set to 1 hold no Kerberos data but are instead used to acknowledge the reception of traffic up to the given Identifer.</p>
+<p id="rfc.section.3.3.p.4">The Type field is always set to the value TBD assigned by IANA as the Method Type for EAP-Kerberos.</p>
+<p id="rfc.section.3.3.p.5">When a Kerberos frame falls apart into multiple fragments, then all these fragments are submitted individually, with an Identifier byte value that increments from the value of its first packet.  This is useful on the receiving end, where the portions must be recollected.  When it transpires that EAP frames were not received in good order, they MUST be retransmitted.  Indications of such ill-received EAP frames are received through special acknowledgement EAP frames.  The Identifier starts from 0 for each new Kerberos frame, so the initial EAP frame for a Kerberos frame is easily recognised.</p>
+<p id="rfc.section.3.3.p.6">When encapsulating a Kerberos fragment, the EAP frame always has a Length over 5.  There is an additional EAP frame used to acknowledge having received prior frames, and this is a frame with Length equal to 5.  It SHOULD only be sent on the last frame before an apparent gap in the frame sequence, and in addition it MUST be sent on the last frame that completes the reconstruction of a Kerberos frame.  Acknowledgement packets replicate the Identifier tag from the last EAP frame that they received in good order.  TODO: Is this possible, or MUST it be a roundtrip to satisfy carriers such as RADIUS? </p>
+<p id="rfc.section.3.3.p.7">Only when a complete Kerberos frame has been reconstructed on the receiving end, is it possible to send the next message in the opposite direction.  The backend authentication server can start to build a response after receiving a Kerberos frame, and the authenticating peer can choose if it wants to send another request in a Kerberos frame.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#support" id="support">Component Support for EAP-Kerberos</a></h1>
+<p id="rfc.section.4.p.1">The following subsections indicate what support is needed for EAP-Kerberos to be used.</p>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#kinit2eap" id="kinit2eap">Peer Support for EAP-Kerberos</a></h1>
+<p id="rfc.section.4.1.p.1">In EAP terminology, the (authenticating) peer is the endpoint that wants to be authenticated by the Authenticator.  It must have explicit support for EAP-Kerberos.</p>
+<p id="rfc.section.4.1.p.2">When the peer has no valid ticket granting ticket, or when it prefers to use another for EAP-Kerberos, then it should first get one using the AS exchange [Section 3.1 of <a href="#RFC4120">[RFC4120]</a>].</p>
+<p id="rfc.section.4.1.p.3">When the peer has no valid service ticket, or when it prefers to use another one, for EAP-Kerberos, then it should get one (or multiple) using the TGS exchange [Section 3.3 of <a href="#RFC4120">[RFC4120]</a>].</p>
+<p id="rfc.section.4.1.p.4">Finally, the peer will want to authenticate with the backend server.  To do that, it uses the service ticket in a double AP exchange [Section 3.2 of <a href="#RFC4120">[RFC4120]</a>]: </p>
+
+<ol>
+  <li>The first AP request [Section 5.5.1 of <a href="#RFC4120">[RFC4120]</a>] sent from peer to backend includes no cksum, but supplies a randomly generated seq-number in its Authenticator.  It does not include a subkey.</li>
+  <li>The first AP response [Section 5.5.2 of <a href="#RFC4120">[RFC4120]</a>] sent from backend to peer contains a subkey and a seq-number field that is one more than the seq-number field in the first AP request.  The subkey is stored by the peer as its master key.</li>
+  <li>The second AP request sent from the peer to the backend includes a cksum computed over the EncAPRepPart of the first AP response, after it has been decrypted into a DER structure.  The seq-number field is one higher than the seq-number field in the first AP response.  The hash assures the peer's ability to decrypt, and thus ownership of the key; the seq-number may help to assure extra protection from replay.  The second AP request additionally holds a subkey that the backend should henceforth be used by the backend.  The second AP request is encrypted with the subkey found in the first AP response.</li>
+  <li>The second AP response sent from backend to peer includes no subkey but it does hold a seq-number which is one higher than the seq-number from the second AP request.  The second AP response is encrypted with the subkey found in the second AP request.</li>
+</ol>
+
+<p> This exchange establishes mutual authentication between the peer and backend.</p>
+<p id="rfc.section.4.1.p.5">Peers SHOULD support at least the above variations of Kerberos frame flow, but they MAY attempt to do more; specifically, it may attempt to perform other AS, TGS and AP exchanges than what is strictly needed for authentication to commence.  All this must be done before the final authentication step is made.</p>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#eap-pass" id="eap-pass">Authenticator Support for EAP-Kerberos</a></h1>
+<p id="rfc.section.4.2.p.1">In EAP terminology, the authenticator is the part of the infrastructure that wants to know if the authenticating peer can be granted access.  It often coincides with the Network Access Server in the customary EAP use case of granting network access.</p>
+<p id="rfc.section.4.2.p.2">The authenticator SHOULD NOT modify EAP-Kerberos messages that it passes between peer and a backend authentication server.  Specifically, it MUST NOT filter on [APPLICATION n] tags of Kerberos frames.</p>
+<p id="rfc.section.4.2.p.3">In summary, there is nothing that needs to change to an authenticator to be able to pass EAP-Kerberos.</p>
+<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#eap2kdc" id="eap2kdc">Backend Support for EAP-Kerberos</a></h1>
+<p id="rfc.section.4.3.p.1">In EAP terminology, the backend (authentication server) is the endpoint for EAP that makes the decision to grant or deny access to the authenticating peer.  It is usually a server that runs an AAA protocol such as RADIUS or Diameter.</p>
+<p id="rfc.section.4.3.p.2">To facilitate EAP-Kerberos, the backend reconstructs Kerberos frames from EAP frames, and either handles them locally or relays them as permitted by configured policy.</p>
+<p id="rfc.section.4.3.p.3">It is RECOMMENDED for backends to facilitate AS and TGS requests [Section 5.4.1. of <a href="#RFC4120">[RFC4120]</a>] from the peer, and relay those to a KDC.  In both cases, the backend SHOULD perform KDC Discovery [Section 7.2.3 of <a href="#RFC4120">[RFC4120]</a>] to find the KDC, based on the realm field in the request.  It relays the Kerberos frame to this discovered KDC, and awaits a reply (or produces a timeout error to replace it).  The reply is relayed back to the peer as a Kerberos frame encapsulated in EAP frames.</p>
+<p id="rfc.section.4.3.p.4">The backend MAY additionally relay AP requests [Section 5.5.1 or <a href="#RFC4120">[RFC4120]</a>] to servers when configured to do so; in this case the realm and sname fields of the contained ticket are helpful to locate the target for relaying.  The applications KRB-SAFE, KRB-PRIV and KRB-CRED have no indication of the protocol being used, so their relaying is less likely.  What this means is that the facility for relaying AP requests is rather limited, and only suitable for situations that require nothing but the AP requests themselves; it may be useful to exchange key materials in the backend infrastructure, such as end-to-end key material.</p>
+<p id="rfc.section.4.3.p.5">The backend MUST accept AP requests directed to a service name of its own.  Such requests are processed under the following rules: </p>
+
+<ul>
+  <li>Upon arrival of an AP request, the encrypted part is decrypted, by default with the encryption contained in the ticket.  When a subkey has been previously supplied to the peer in the current EAP-Kerberos session, then this replaces the default encryption key from the ticket.</li>
+  <li>An AP request from the peer has a seq-number field, and the response MUST have a seq-number increased by one.</li>
+  <li>When the peer has not been sent a subkey before, one is generated from a good random source, and sent in the AP response.  This is done only once per EAP-Kerberos session.</li>
+  <li>Every AP request receives an AP response or a KRB-ERROR; this is even true if the AP request leads to the deciding one.  The AP response is encrypted with the key in the ticket by default; when a subkey has just been supplied by the AP request from the peer, then this is used instead.</li>
+  <li>When timing in the AP request diverts too far from the clock time of the backend, then an error is sent instead of an AP response.  It is common to permit a time window of about five minutes around the backend clock time.</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.4.3.p.6">An AP request leads to the final decision of either Failure or Success when a subkey has been sent to the peer, when the peer just sent a subkey and cksum in the encrypted part of the AP request.  The decision is Failure, except when all the following requirements are met and the decision therefore becomes Success: </p>
+
+<ul>
+  <li>The timing information diverts is close enough to the clock time of the backend.</li>
+  <li>The seq-number is one more than the seq-number that was sent to the peer in a preceding AP response sent during this EAP-Kerberos session;</li>
+  <li>The cksum is a correctly computed checksum over the DER-encoded bytes that hold the EncAPRepPart after decryption, taken from the foregoing AP response in the current EAP-Kerberos session.</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.4.3.p.7">The backend MUST send exactly one Kerberos response to any Kerberos request that it receives.  If it receives a request encapsulated in EAP that it does not handle, then it MUST reply with a KRB-ERROR message [Section 5.9.1 of <a href="#RFC4120">[RFC4120]</a>] with a suitable error code [Section 7.5.1 of <a href="#RFC4120">[RFC4120]</a>], and/or trigger a fatal error.</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#masterkey" id="masterkey">Established Master Key</a></h1>
+<p id="rfc.section.5.p.1">When an EAP-Kerberos session ends in Success, then both sides have provided a subkey to the other side, to be used for future communication towards them.  Upon success, these keys MAY be used to initiate any further keying requirements between the peer and the infrastructure setup by the backend.</p>
+<p id="rfc.section.5.p.2">We do not prescribe the manner in which this is done, or how the master key is used to construct session keys, but leave it to the general remark that session keys should be derived in a manner that does not permit derivation of the master key or other session keys derived from it.</p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#efficiency" id="efficiency">Efficiency Considerations</a></h1>
+<p id="rfc.section.6.p.1">Among the uses of EAP are applications where no IP address has been obtained by the peer, such as gaining network access over PPP or Ethernet protocols with 802.1x protection.  In such networks, it may be required to bootstrap Kerberos tickets that would be needed for EAP-Kerberos.  This is why AS and TGS exchanges may be passed over EAP, and why the backend server may support such exchanges by relaying such traffic to a KDC.</p>
+<p id="rfc.section.6.p.2">Once access to a network has been granted, there may be an additional need to encrypt traffic, and facilitate authentication.  For such exchanges, there may be a use for additional Kerberos exchanges.  This is why this specification leaves room for such additional exchanges, without enforcing them.</p>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#privacy" id="privacy">Privacy Considerations</a></h1>
+<p id="rfc.section.7.p.1">The EAP-Kerberos exchange reveals some information that may be considered private.  This may be a privacy concern in infrastructures that pass the EAP-Kerberos data through third party network components.  It is possible facilitate privacy for any intermediate EAP relays by sending EAP-Kerberos within EAP tunneling mechanisms, such as EAP-TTLS <a href="#RFC5281">[RFC5281]</a> or EAP-FAST <a href="#RFC4851">[RFC4851]</a>.</p>
+<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#security" id="security">Security Considerations</a></h1>
+<p id="rfc.section.8.p.1">Tunneling is not required for reasons of security; Kerberos frames are designed to travel over untrusted networks.</p>
+<p id="rfc.section.8.p.2">When EAP-Kerberos travels in the company of attributes descriptive of the peer, it is important to understand that nothing that EAP-Kerberos will do can assign any validity to these attributes.  The "innert" identity as mentioned in Kerberos packets is what is validated.  Any "outer" identity as mentioned in such companion attributes is more inclined towards routing than to identification.</p>
+<p id="rfc.section.8.p.3">The peer and its KDC establish end-to-end trust on the basis of their pre-shared secret.  This is subsequently used to infer trust on derived keys and tickets.  For the intermediaries (namely, the authenticator and even the backend authentication server) the secret is not known, and so they may need extra bases for trust in the established relationship.  Specifically, where the lookup of a KDC does not require DNSSEC to secure the client, it will often be instrumental for such intermediate pieces of the infrastructure to establish trust in the authenticity of the KDC for a particular realm or domain name.  Note however that the eventual use of the AP exchange between the peer and its backend should imply an alternative trust basis between these two players, through either a shared KDC or two that have a secure realm-crossover relationship.  This leaves the authenticator as the main party to protect itself; note that this party can be especially sensitive when it takes action based on companion attributes that travel back with an EAP-Kerberos Success.</p>
+<h1 id="rfc.section.9"><a href="#rfc.section.9">9.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
+<p id="rfc.section.9.p.1">This specification requests the registration of a Method Type in the Extensible Authentication Protocol (EAP) Registry, from the range granted through the Designated Expert with Specification Required procedure.  IANA has assigned TBD to the EAP method specified herein.</p>
+<h1 id="rfc.references"><a href="#rfc.references">10.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">10.1.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="RFC3748">[RFC3748]</b>
+      </td>
+      <td class="top"><a>Aboba, B.</a>, <a>Blunk, L.</a>, <a>Vollbrecht, J.</a>, <a>Carlson, J.</a> and <a>H. Levkowetz</a>, "<a href="http://tools.ietf.org/html/rfc3748">Extensible Authentication Protocol (EAP)</a>", RFC 3748, DOI 10.17487/RFC3748, June 2004.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4120">[RFC4120]</b>
+      </td>
+      <td class="top"><a>Neuman, C.</a>, <a>Yu, T.</a>, <a>Hartman, S.</a> and <a>K. Raeburn</a>, "<a href="http://tools.ietf.org/html/rfc4120">The Kerberos Network Authentication Service (V5)</a>", RFC 4120, DOI 10.17487/RFC4120, July 2005.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">10.2.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="RFC2865">[RFC2865]</b>
+      </td>
+      <td class="top"><a>Rigney, C.</a>, <a>Willens, S.</a>, <a>Rubens, A.</a> and <a>W. Simpson</a>, "<a href="http://tools.ietf.org/html/rfc2865">Remote Authentication Dial In User Service (RADIUS)</a>", RFC 2865, DOI 10.17487/RFC2865, June 2000.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4851">[RFC4851]</b>
+      </td>
+      <td class="top"><a>Cam-Winget, N.</a>, <a>McGrew, D.</a>, <a>Salowey, J.</a> and <a>H. Zhou</a>, "<a href="http://tools.ietf.org/html/rfc4851">The Flexible Authentication via Secure Tunneling Extensible Authentication Protocol Method (EAP-FAST)</a>", RFC 4851, DOI 10.17487/RFC4851, May 2007.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5281">[RFC5281]</b>
+      </td>
+      <td class="top"><a>Funk, P.</a> and <a>S. Blake-Wilson</a>, "<a href="http://tools.ietf.org/html/rfc5281">Extensible Authentication Protocol Tunneled Transport Layer Security Authenticated Protocol Version 0 (EAP-TTLSv0)</a>", RFC 5281, DOI 10.17487/RFC5281, August 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6733">[RFC6733]</b>
+      </td>
+      <td class="top"><a>Fajardo, V.</a>, <a>Arkko, J.</a>, <a>Loughney, J.</a> and <a>G. Zorn</a>, "<a href="http://tools.ietf.org/html/rfc6733">Diameter Base Protocol</a>", RFC 6733, DOI 10.17487/RFC6733, October 2012.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Author's Address</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Rick van Rein</span> 
+	  <span class="n hidden">
+		<span class="family-name">Van Rein</span>
+	  </span>
+	</span>
+	<span class="org vcardline">ARPA2.net</span>
+	<span class="adr">
+	  <span class="vcardline">Haarlebrink 5</span>
+
+	  <span class="vcardline">
+		<span class="locality">Enschede</span>,  
+		<span class="region">Overijssel</span> 
+		<span class="code">7544 WP</span>
+	  </span>
+	  <span class="country-name vcardline">The Netherlands</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:rick@openfortress.nl">rick@openfortress.nl</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
